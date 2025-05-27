@@ -2911,14 +2911,17 @@ void ClientConnection::Authenticate(std::vector<CARD32>& current_auth)
 				case rfbUltraVNC_SCPrompt: // adzm 2010-10				
 				case rfbUltraVNC_SessionSelect:
 				case rfbUltraVNC_MsLogonIIAuth:
+				case rfbVncAuth:
+				case rfbNoAuth:
+					auth_supported.push_back(authAllowed[i]);
+					break;
 				case rfbVeNCypt:
 				case rfbRSAAES_256:
 				case rfbRSAAES:
 				case rfbRSAAESne_256:
 				case rfbRSAAESne:
-				case rfbVncAuth:
-				case rfbNoAuth:
-					auth_supported.push_back(authAllowed[i]);
+					if (m_opts && !m_opts->m_fAutoAcceptNoDSM)
+						auth_supported.push_back(authAllowed[i]);
 					break;
 				}
 			}
